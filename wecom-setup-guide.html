@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>企业微信侧边栏配置图文步骤 · 客户档案库</title>
+<style>
+  :root{
+    --brand:#0E7C86; --brand-d:#0A5C63; --brand-l:#E6F2F3;
+    --ink:#1F2933; --sub:#5B6B73; --line:#E2E8EC; --bg:#F5F7F8;
+    --ok:#2E9E5B; --warn:#C9821A; --card:#fff; --shadow:0 1px 3px rgba(16,40,48,.08),0 6px 18px rgba(16,40,48,.06);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,"PingFang SC","Microsoft YaHei",Segoe UI,Roboto,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.65;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:32px 20px 80px}
+  header{background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;border-radius:16px;
+    padding:28px 28px 24px;box-shadow:var(--shadow)}
+  header h1{margin:0 0 6px;font-size:22px;font-weight:700}
+  header p{margin:0;opacity:.92;font-size:14px}
+  .links{margin-top:16px;display:grid;gap:8px}
+  .linkrow{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+    border-radius:10px;padding:8px 12px;font-size:13px}
+  .linkrow b{background:#fff;color:var(--brand-d);border-radius:6px;padding:1px 8px;font-size:12px;white-space:nowrap}
+  .linkrow code{color:#fff;word-break:break-all;font-family:ui-monospace,Menlo,Consolas,monospace}
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px 22px 18px;
+    margin-top:20px;box-shadow:var(--shadow)}
+  h2{font-size:17px;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  h2 .n{background:var(--brand);color:#fff;width:26px;height:26px;border-radius:8px;display:inline-flex;
+    align-items:center;justify-content:center;font-size:14px;font-weight:700;flex:none}
+  .lead{color:var(--sub);font-size:13.5px;margin:2px 0 16px}
+  .step{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start;margin-top:18px;
+    padding-top:18px;border-top:1px dashed var(--line)}
+  .step:first-of-type{border-top:none;padding-top:0;margin-top:4px}
+  .txt h3{font-size:14.5px;margin:0 0 8px;color:var(--brand-d)}
+  .txt ol,.txt ul{margin:0;padding-left:18px;font-size:13.5px;color:var(--ink)}
+  .txt li{margin:5px 0}
+  .txt code{background:var(--brand-l);color:var(--brand-d);padding:1px 6px;border-radius:5px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12.5px}
+  .tip{margin-top:10px;font-size:12.5px;background:#FFF7E9;color:#8a5a12;border:1px solid #F3DCA6;
+    border-radius:9px;padding:8px 11px}
+  .tip b{color:var(--warn)}
+  .urlbox{margin-top:10px;background:#0F2A2E;color:#A7E0E6;border-radius:10px;padding:11px 13px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:12px;word-break:break-all}
+  .urlbox .k{color:#6fd0db}
+  /* ---- 模拟截图 ---- */
+  .mock{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:#fff;font-size:12px}
+  .bar{background:#F0F3F4;display:flex;align-items:center;gap:6px;padding:7px 10px;border-bottom:1px solid var(--line)}
+  .dot{width:9px;height:9px;border-radius:50%}
+  .dot.r{background:#FF5F57}.dot.y{background:#FEBC2E}.dot.g{background:#28C840}
+  .bar .u{margin-left:8px;color:var(--sub);font-size:11px}
+  .scr{display:flex;min-height:150px}
+  .side{width:118px;background:#1F2A30;color:#C9D4D8;padding:10px 8px;flex:none}
+  .side .g{margin:3px 0;padding:5px 7px;border-radius:6px;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .side .g.on{background:var(--brand);color:#fff}
+  .side .g.sec{margin-top:10px;color:#7E8B90;font-size:10px}
+  .main{flex:1;padding:12px;background:#fff}
+  .crumb{color:var(--sub);font-size:10.5px;margin-bottom:8px}
+  .ph{background:#F4F6F7;border:1px solid var(--line);border-radius:8px;padding:9px;margin-bottom:8px}
+  .ph.big{height:34px;display:flex;align-items:center;font-weight:600;color:var(--ink);font-size:12px}
+  .btn{display:inline-block;background:var(--brand);color:#fff;border-radius:7px;padding:5px 12px;font-size:11px;font-weight:600}
+  .btn.ghost{background:#fff;color:var(--brand);border:1px solid var(--brand)}
+  .field{margin:8px 0}
+  .field label{display:block;color:var(--sub);font-size:10.5px;margin-bottom:3px}
+  .field .inp{height:26px;border:1px solid var(--line);border-radius:6px;display:flex;align-items:center;padding:0 8px;
+    font-family:ui-monospace,Menlo,Consolas,monospace;font-size:10.5px;color:var(--ink);background:#fff}
+  .field .inp.hl{background:#E6F2F3;border-color:var(--brand);color:var(--brand-d)}
+  .chip{display:inline-block;background:var(--brand-l);color:var(--brand-d);border-radius:20px;padding:2px 9px;font-size:10.5px;margin:2px}
+  .ok{color:var(--ok);font-size:11px;font-weight:600}
+  .verify{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+  .vcard{flex:1;min-width:200px;border:1px solid var(--line);border-radius:10px;padding:12px;background:#FAFCFC}
+  .vcard h4{margin:0 0 6px;font-size:13px;color:var(--brand-d)}
+  .vcard p{margin:0;font-size:12.5px;color:var(--sub)}
+  footer{margin-top:26px;text-align:center;color:var(--sub);font-size:12px}
+  @media (max-width:640px){.step{grid-template-columns:1fr}.side{width:96px}}
+  @media print{body{background:#fff}.wrap{max-width:none;padding:0}
+    section,header{box-shadow:none;break-inside:avoid}header{background:var(--brand)!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>企业微信侧边栏配置图文步骤</h1>
+    <p>客户档案库 + 客户自助收集表 · 零后端纯前端 · 管理员一次性配置</p>
+    <div class="links">
+      <div class="linkrow"><b>档案库</b><code>https://adas15.github.io/customer-archive/</code></div>
+      <div class="linkrow"><b>收集表</b><code>https://adas15.github.io/customer-archive/collect.html</code></div>
+      <div class="linkrow"><b>侧边栏</b><code>https://adas15.github.io/customer-archive/index.html?chatId=$CHAT_ID$</code></div>
+    </div>
+  </header>
+
+  <!-- 前置 -->
+  <section>
+    <h2><span class="n">!</span>配置前准备</h2>
+    <div class="lead">只需 3 样东西，约 5 分钟完成。配置后所有员工立即可用，无需逐个安装。</div>
+    <ul>
+      <li><b>管理员权限</b>：你是企业微信的「管理员」，或请管理员操作这一步。</li>
+      <li><b>上面那串「侧边栏」链接</b>：<code>.../index.html?chatId=$CHAT_ID$</code>（务必带 <code>$CHAT_ID$</code> 变量，这是群隔离的关键）。</li>
+      <li><b>可见范围</b>：想让哪些员工/部门在侧边栏看到这个应用（配置时可勾选）。</li>
+    </ul>
+    <div class="tip"><b>提示：</b>这个应用是纯网页，不需要上传任何安装包、不需要服务器。管理员只是在后台「登记一个网页地址」。</div>
+  </section>
+
+  <!-- 步骤1 -->
+  <section>
+    <h2><span class="n">1</span>登录企业微信管理后台</h2>
+    <div class="lead">用管理员账号打开管理后台。</div>
+    <div class="step">
+      <div class="txt">
+        <h3>操作步骤</h3>
+        <ol>
+          <li>电脑浏览器打开 <code>https://work.weixin.qq.com</code></li>
+          <li>点右上角「企业登录」，用企业微信 App <b>扫码</b> 或账号密码登录。</li>
+          <li>登录后进入<b>管理后台</b>首页（左图所示布局）。</li>
+        </ol>
+        <div class="tip"><b>注意：</b>必须是「管理员」身份登录，普通员工账号看不到左侧「客户联系」等配置菜单。</div>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">work.weixin.qq.com</span></div>
+        <div class="scr">
+          <div class="side">
+            <div class="g sec">工作台</div>
+            <div class="g">客户联系</div>
+            <div class="g">通讯录</div>
+            <div class="g">应用管理</div>
+            <div class="g">管理工具</div>
+          </div>
+          <div class="main">
+            <div class="crumb">管理后台 / 首页</div>
+            <div class="ph big">企业微信管理后台</div>
+            <div class="ph">我的企业 · 成员 128 人</div>
+            <div class="ph">👉 找到左侧「客户联系」菜单开始配置</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 步骤2 -->
+  <section>
+    <h2><span class="n">2</span>进入「客户联系 → 配置」</h2>
+    <div class="lead">侧边栏属于「客户联系」能力，从这里进入配置页。</div>
+    <div class="step">
+      <div class="txt">
+        <h3>操作步骤</h3>
+        <ol>
+          <li>左侧菜单点 <b>「客户联系」</b>。</li>
+          <li>在顶部 Tab 切到 <b>「配置」</b>。</li>
+          <li>向下找到 <b>「聊天工具」</b> 卡片区域。</li>
+        </ol>
+        <div class="tip"><b>说明：</b>不同企业微信版本菜单名称可能略有差异，若找不到「客户联系」，可尝试「客户」或联系服务商确认是否已开通「客户联系」功能。</div>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">管理后台 / 客户联系</span></div>
+        <div class="scr">
+          <div class="side">
+            <div class="g sec">客户联系</div>
+            <div class="g on">配置</div>
+            <div class="g">客户</div>
+            <div class="g">统计</div>
+          </div>
+          <div class="main">
+            <div class="crumb">客户联系 / 配置</div>
+            <div style="display:flex;gap:6px;margin-bottom:8px">
+              <span class="chip">基础配置</span><span class="chip on" style="background:var(--brand);color:#fff">聊天工具</span>
+            </div>
+            <div class="ph big">聊天工具</div>
+            <div class="ph">把网页 / 小程序配置到聊天侧边栏，员工沟通时随时调用</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 步骤3 -->
+  <section>
+    <h2><span class="n">3</span>找到「侧边栏」并添加网页</h2>
+    <div class="lead">在「聊天工具」里点「进入 / 配置」，切到「侧边栏」Tab，添加自定义网页。</div>
+    <div class="step">
+      <div class="txt">
+        <h3>操作步骤</h3>
+        <ol>
+          <li>在「聊天工具」卡片点 <b>「进入」或「配置」</b>。</li>
+          <li>顶部切到 <b>「侧边栏」</b> Tab。</li>
+          <li>点 <b>「添加」</b> → 选择 <b>「配置网页」</b>。</li>
+        </ol>
+        <div class="tip"><b>关键点：</b>这里填的是网页地址，不是小程序、不是自建应用。选「<b>配置网页</b>」即可。</div>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">聊天工具 / 侧边栏</span></div>
+        <div class="scr">
+          <div class="side">
+            <div class="g sec">聊天工具</div>
+            <div class="g on">侧边栏</div>
+            <div class="g">聊天工具栏</div>
+          </div>
+          <div class="main">
+            <div class="crumb">聊天工具 / 侧边栏</div>
+            <div class="ph big">侧边栏 <span class="btn" style="float:right">+ 添加</span></div>
+            <div class="ph">暂无自定义网页，点击「添加」配置你的应用</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 步骤4 -->
+  <section>
+    <h2><span class="n">4</span>填写名称与网页地址（核心）</h2>
+    <div class="lead">这一步最重要：名称随便起，网页地址必须<b>完整粘贴</b>带 <code>$CHAT_ID$</code> 的那条。</div>
+    <div class="step">
+      <div class="txt">
+        <h3>填写内容</h3>
+        <ul>
+          <li><b>名称</b>：填 <code>客户档案库</code>（员工在侧边栏看到的名字）。</li>
+          <li><b>网页地址</b>：粘贴下方蓝色框里的完整链接。</li>
+          <li><b>图标</b>（可选）：可上传一张 logo。</li>
+        </ul>
+        <div class="urlbox">
+          <span class="k">网页地址 =</span><br>
+          https://adas15.github.io/customer-archive/index.html?chatId=$CHAT_ID$
+        </div>
+        <div class="tip"><b>务必保留 <code>$CHAT_ID$</code></b>：企微会自动把它替换成当前群 / 客户的真实 ID，从而实现「打开哪个群就显示哪个群的档案」。删掉它会导致所有群共用一份数据。</div>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">添加侧边栏网页</span></div>
+        <div class="scr" style="min-height:auto">
+          <div class="main" style="flex:1">
+            <div class="field"><label>名称</label><div class="inp">客户档案库</div></div>
+            <div class="field"><label>网页地址（必填）</label>
+              <div class="inp hl">https://adas15.github.io/customer-archive/index.html?chatId=$CHAT_ID$</div></div>
+            <div class="field"><label>图标（可选）</label><div class="inp">📁 上传图片</div></div>
+            <div style="margin-top:10px"><span class="btn">保存</span> <span class="btn ghost">取消</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 步骤5 -->
+  <section>
+    <h2><span class="n">5</span>设置可见范围并保存</h2>
+    <div class="lead">选择哪些员工 / 部门能在侧边栏看到这个应用，然后保存。</div>
+    <div class="step">
+      <div class="txt">
+        <h3>操作步骤</h3>
+        <ol>
+          <li>在「可使用范围」里勾选员工或部门（如「销售部」「客服部」）。</li>
+          <li>确认网页地址无误后点 <b>「保存」</b>。</li>
+          <li>保存成功即生效，<b>无需审批、无需发布</b>。</li>
+        </ol>
+        <div class="tip"><b>范围建议：</b>先选一个小范围（如试点部门）验证效果，没问题再全量放开。</div>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="u">设置可见范围</span></div>
+        <div class="scr" style="min-height:auto">
+          <div class="main" style="flex:1">
+            <div class="field"><label>可使用该侧边栏应用的成员</label>
+              <div class="inp">✓ 销售一部　✓ 销售二部　✓ 客服部　+ 添加</div></div>
+            <div class="ph" style="color:var(--ok)">✓ 已保存到「客户档案库」</div>
+            <div style="margin-top:8px"><span class="btn">完成</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 步骤6 验证 -->
+  <section>
+    <h2><span class="n">6</span>验证：员工侧边栏出现入口</h2>
+    <div class="lead">配置完成后，员工在企微客户端（电脑 / 手机均可）打开任意客户或群聊，右侧栏即可看到「客户档案库」。</div>
+    <div class="verify">
+      <div class="vcard">
+        <h4>① 电脑端验证</h4>
+        <p>打开一个客户 / 群聊 → 右侧「聊天侧边栏」点「客户档案库」→ 显示该群客户列表。切换不同群，数据随之隔离。</p>
+      </div>
+      <div class="vcard">
+        <h4>② 手机端验证</h4>
+        <p>企微 App 打开会话 → 点右上角「···」或侧边栏图标 → 选「客户档案库」→ 同样可用，数据与电脑端各自本地存储。</p>
+      </div>
+      <div class="vcard">
+        <h4>③ 收集表闭环</h4>
+        <p>在档案库点「↗ 收集表」复制链接发客户 → 客户填完导出 zip → 微信发回 → 档案库「导入」自动归群。</p>
+      </div>
+    </div>
+    <div class="tip" style="margin-top:14px"><b>如果员工侧边栏看不到：</b>① 确认该员工在「可见范围」内；② 让其退出企微重新登录刷新配置；③ 确认网页地址带了 <code>$CHAT_ID$</code> 且企微已开通「客户联系」。</div>
+  </section>
+
+  <footer>
+    文档由 WorkBuddy 生成 · 配置路径以企业微信管理后台实际版本为准，如菜单名称有差异请按功能定位<br>
+    站点永久地址：https://adas15.github.io/customer-archive/
+  </footer>
+
+</div>
+</body>
+</html>
